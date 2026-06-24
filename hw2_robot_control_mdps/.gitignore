@@ -1,3 +1,7 @@
 __pycache__/
 .vscode/
-logs/
+logs/*
+!logs/so100_tracking/
+logs/so100_tracking/*
+!logs/so100_tracking/so100_tracking_1/
+*.egg-info/

@@ -2,25 +2,32 @@ import numpy as np
 import mujoco
 
 
-def get_lemniscate_keypoint(t, a=0.2):
+def get_lemniscate_keypoint(
+    t: float | np.ndarray, a: float = 0.2
+) -> tuple[float, float] | tuple[np.ndarray, np.ndarray]:
     """
     TODO:
     Generate a set of keypoints using Lemniscate of Bernoulli (infinity sign) in the Y-Z plane.
         The formula is: y = a * cos(t) / (1 + sin(t)^2)
                         z = a * cos(t) * sin(t) / (1 + sin(t)^2)
     For interest, you can learn about Lemniscate of Bernoulli on wikipedia: https://en.wikipedia.org/wiki/Lemniscate_of_Bernoulli
-    
+
     Args:
         t (float or np.ndarray): Time scales from 0 to 2π to generate keypoints.
         a (float): Scaling factor for the size of the lemniscate.
-        
+
     Returns:
         y (float or np.ndarray): y coordinates of the keypoint on the lemniscate.
         z (float or np.ndarray): z coordinates of the keypoint on the lemniscate.
     """
-    raise NotImplementedError()
+    y = a * np.cos(t) / (1 + np.sin(t) ** 2)
+    z = a * np.cos(t) * np.sin(t) / (1 + np.sin(t) ** 2)
+    return y, z
 
-def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
+
+def build_keypoints(
+    count: int = 16, width: float = 0.25, x_offset: float = 0.3, z_offset: float = 0.25
+) -> np.ndarray:
     """TODO:
     Build a set of keypoints (x, y, z) along the lemniscate trajectory.
     Steps:
@@ -38,14 +45,27 @@ def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
     Returns:
         np.ndarray: Array of shape (count, 3) containing the generated keypoints.
     """
-    raise NotImplementedError()
+    times = np.linspace(0, 2 * np.pi, num=count)
+    ys, zs = get_lemniscate_keypoint(times, a=width)
+    if isinstance(ys, np.ndarray):
+        x_offset = np.repeat(x_offset, ys.shape[0])
+    return np.column_stack((x_offset, ys, z_offset + zs))
 
-def ik_track(model, data, site_name, target_pos,
-             damping=1e-3, pos_gain=2.0, dt=0.1, max_iters=2000):
+
+def ik_track(
+    model,
+    data,
+    site_name: str,
+    target_pos: np.ndarray,
+    damping: float = 1e-3,
+    pos_gain: float = 2.0,
+    dt: float = 0.1,
+    max_iters: int = 2000,
+) -> np.ndarray:
     """TODO:
     Implement an IK tracking function that computes the joint configuration to reach a target end-effector position. We ignore orientation tracking for simplicity.
-    The function should iteratively update the joint configuration using the Jacobian of the end-effector until it reaches the target within a specified tolerance 
-    or exceeds the maximum number of iterations. We use the Damped Least Squares method to handle singularities in the Jacobian. For interest, you can learn about 
+    The function should iteratively update the joint configuration using the Jacobian of the end-effector until it reaches the target within a specified tolerance
+    or exceeds the maximum number of iterations. We use the Damped Least Squares method to handle singularities in the Jacobian. For interest, you can learn about
     Damped Least Squares method on wikipedia: https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm
 
     Steps:
@@ -78,28 +98,35 @@ def ik_track(model, data, site_name, target_pos,
 
     for i in range(max_iters):
         # use forward kinematics to update current end-effector position: data.site(site_name).xpos
-        mujoco.mj_kinematics(model, data)
+        # qpos: joint angles
+        # xpos: spatial coordinates
+        mujoco.mj_kinematics(model, data)  # updates current end-effector pose
         mujoco.mj_comPos(model, data)
 
         # TODO: compute end-effector position error
-        err_pos = ...
+        cur_pos = data.site(site_name).xpos
+        err_pos = target_pos - cur_pos  # (3,)
 
         # TODO: check if the 2-norm of the position error is within a small threshold (1e-3), if yes, break the loop
-        ...
-        
+        if np.linalg.norm(err_pos) < 1e-3:
+            break
+
         # Get the Jacobian of the end-effector using mj_jacSite.
-        jacp = np.zeros((3, num_joints)) # position Jacobian
-        jacr = np.zeros((3, num_joints)) # orientation Jacobian
+        jacp = np.zeros((3, num_joints))  # position Jacobian dpos/dq
+        jacr = np.zeros((3, num_joints))  # orientation Jacobian dros/dq
         mujoco.mj_jacSite(model, data, jacp, jacr, model.site(site_name).id)
         J = np.vstack([jacp, jacr])  # shape (6, nv)
 
         # TODO: compute the change in joint configuration (qdot) using Damped Least Squares method to reduce the position error
         # Damped least squares: qdot = J^T @ (J @ J^T + damping * I)^-1 @ weighted_err
-        # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D vector (3 for pos, 3 for rot) of the form 
+        # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D vector (3 for pos, 3 for rot) of the form
         # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoring orientation tracking, you can set the rotational part of the weighted error to zero.
-        # Instead of directly computing the matrix inverse (which can be numerically unstable), you should use np.linalg.solve to solve the 
+        # Instead of directly computing the matrix inverse (which can be numerically unstable), you should use np.linalg.solve to solve the
         # linear system (J @ J^T + damping * I) x = weighted_err for x, and then compute qdot = J^T @ x. This is more stable and efficient than computing the inverse.
-        qdot = ...
+        weighted_err = np.concat((err_pos * pos_gain, np.zeros(3)))  # (6,)
+        A = J @ J.T + damping * np.identity(6)  # (6, 6)
+        scaled_err = np.linalg.solve(A, weighted_err)  # (6,)
+        qdot = J.T @ scaled_err  # (nv,)
 
         # optional clamp to avoid overshoot
         qdot = np.clip(qdot, -2.0, 2.0)

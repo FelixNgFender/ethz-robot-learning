@@ -1,0 +1,1 @@
+- [ ] bonus hw2 ex3 train better RL policy to track lemniscate curve

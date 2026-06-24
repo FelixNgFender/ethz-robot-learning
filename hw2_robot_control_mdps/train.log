@@ -1,0 +1,120 @@
+...
+-----------------------------------------
+| rollout/                |             |
+|    ep_ee_tracking_error | 0.00394     |
+|    ep_len_mean          | 100         |
+|    ep_rew_mean          | 163         |
+| time/                   |             |
+|    fps                  | 4392        |
+|    iterations           | 498         |
+|    time_elapsed         | 3714        |
+|    total_timesteps      | 16318464    |
+| train/                  |             |
+|    approx_kl            | 0.031967007 |
+|    clip_fraction        | 0.355       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 13.6        |
+|    explained_variance   | 0.996       |
+|    learning_rate        | 4.47e-05    |
+|    loss                 | 2.5         |
+|    n_updates            | 4970        |
+|    policy_gradient_loss | 0.0165      |
+|    std                  | 0.223       |
+|    value_loss           | 4.14        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_ee_tracking_error | 0.00516     |
+|    ep_len_mean          | 100         |
+|    ep_rew_mean          | 161         |
+| time/                   |             |
+|    fps                  | 4392        |
+|    iterations           | 499         |
+|    time_elapsed         | 3722        |
+|    total_timesteps      | 16351232    |
+| train/                  |             |
+|    approx_kl            | 0.039794426 |
+|    clip_fraction        | 0.385       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 13.6        |
+|    explained_variance   | 0.995       |
+|    learning_rate        | 4.91e-05    |
+|    loss                 | 2.82        |
+|    n_updates            | 4980        |
+|    policy_gradient_loss | 0.0207      |
+|    std                  | 0.223       |
+|    value_loss           | 4.56        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_ee_tracking_error | 0.0043      |
+|    ep_len_mean          | 100         |
+|    ep_rew_mean          | 171         |
+| time/                   |             |
+|    fps                  | 4393        |
+|    iterations           | 500         |
+|    time_elapsed         | 3729        |
+|    total_timesteps      | 16384000    |
+| train/                  |             |
+|    approx_kl            | 0.038603716 |
+|    clip_fraction        | 0.405       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 13.7        |
+|    explained_variance   | 0.996       |
+|    learning_rate        | 5.4e-05     |
+|    loss                 | 2.72        |
+|    n_updates            | 4990        |
+|    policy_gradient_loss | 0.0239      |
+|    std                  | 0.222       |
+|    value_loss           | 4           |
+-----------------------------------------
+Saved models to /Users/bear/workplace/ethz-course-2026/hw2_robot_control_mdps/logs/so100_tracking/so100_t
+racking_3
+
+🍮 ethz-course-2026/hw2_robot_control_mdps main  ? ❯ mjpython scripts/evaluate_rand_targets.py --load_r
+un 3 --checkpoint 500
+Loading model from /Users/bear/workplace/ethz-course-2026/hw2_robot_control_mdps/logs/so100_tracking/so10
+0_tracking_3/model_500.zip...
+Final EE tracking error: 0.0443
+Final EE tracking error: 0.0023
+Final EE tracking error: 0.0033
+Final EE tracking error: 0.0784
+Final EE tracking error: 0.0007
+Final EE tracking error: 0.0045
+Final EE tracking error: 0.0033
+Final EE tracking error: 0.0024
+Final EE tracking error: 0.0039
+Final EE tracking error: 0.0023
+Average final EE tracking error: 0.0145
+
+🦊 ethz-course-2026/hw2_robot_control_mdps main  ? ❯ mjpython scripts/evaluate_rand_targets.py --load_r
+un 3 --checkpoint 500
+Loading model from /Users/bear/workplace/ethz-course-2026/hw2_robot_control_mdps/logs/so100_tracking/so10
+0_tracking_3/model_500.zip...
+Final EE tracking error: 0.0033
+Final EE tracking error: 0.0116
+Final EE tracking error: 0.0016
+Final EE tracking error: 0.0017
+Final EE tracking error: 0.0048
+Final EE tracking error: 0.0038
+Final EE tracking error: 0.0128
+Final EE tracking error: 0.0194
+Final EE tracking error: 0.0062
+Final EE tracking error: 0.0025
+Average final EE tracking error: 0.0068
+
+🍕 ethz-course-2026/hw2_robot_control_mdps main  ? ❯ mjpython scripts/evaluate_rand_targets.py --load_r
+un 3 --checkpoint 500
+Loading model from /Users/bear/workplace/ethz-course-2026/hw2_robot_control_mdps/logs/so100_tracking/so10
+0_tracking_3/model_500.zip...
+Final EE tracking error: 0.0029
+Final EE tracking error: 0.0062
+Final EE tracking error: 0.0040
+Final EE tracking error: 0.0144
+Final EE tracking error: 0.0030
+Final EE tracking error: 0.0020
+Final EE tracking error: 0.0026
+Final EE tracking error: 0.0028
+Final EE tracking error: 0.0020
+Final EE tracking error: 0.0163
+Average final EE tracking error: 0.0056
