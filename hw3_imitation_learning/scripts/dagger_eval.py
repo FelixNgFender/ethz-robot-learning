@@ -186,8 +186,10 @@ def run_dagger_episode(
             if human_control and grace_steps_remaining is None:
                 # Start grace period so we keep recording
                 grace_steps_remaining = int(GRACE_SECS / env.dt_ctrl)
-                print(f"  Cube in bin! Recording {grace_steps_remaining} more "
-                      f"steps ({GRACE_SECS}s grace period)...")
+                print(
+                    f"  Cube in bin! Recording {grace_steps_remaining} more "
+                    f"steps ({GRACE_SECS}s grace period)..."
+                )
             elif not human_control:
                 # Policy mode — terminate immediately
                 if recording_this_episode:
@@ -438,7 +440,9 @@ def main():
     print(f"  Total takeover steps: {total_takeover_steps}")
     print(f"  DAgger episodes saved: {n_eps} ({n_steps} total steps)")
     print(f"  Data saved to: {out_zarr}")
-    print("\n If you collected data, you can now retrain your model with the additional episodes.")
+    print(
+        "\n If you collected data, you can now retrain your model with the additional episodes."
+    )
 
 
 if __name__ == "__main__":

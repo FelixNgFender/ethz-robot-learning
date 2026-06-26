@@ -43,9 +43,7 @@ OBSTACLE_DIM: int = 3  # obstacle xyz position
 # ── quaternion rotation ───────────────────────────────────────────────
 
 
-def rotate_quaternion(
-    quat_wxyz: np.ndarray, axis_xyz, angle_deg: float
-) -> np.ndarray:
+def rotate_quaternion(quat_wxyz: np.ndarray, axis_xyz, angle_deg: float) -> np.ndarray:
     """Rotate *quat_wxyz* around *axis_xyz* by *angle_deg* degrees."""
     angle_rad = np.deg2rad(angle_deg)
     axis_xyz = np.asarray(axis_xyz, dtype=np.float64)

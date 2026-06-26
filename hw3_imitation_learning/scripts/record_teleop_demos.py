@@ -486,12 +486,8 @@ class MulticubeZarrWriter(ZarrEpisodeWriter):
         self._goal_pos_buf.append(goal_pos.astype(np.float32, copy=False))
         # state_cube layout: [red(7), green(7), blue(7)].
         self._pos_cube_red_buf.append(state_cube[:7].astype(np.float32, copy=False))
-        self._pos_cube_green_buf.append(
-            state_cube[7:14].astype(np.float32, copy=False)
-        )
-        self._pos_cube_blue_buf.append(
-            state_cube[14:21].astype(np.float32, copy=False)
-        )
+        self._pos_cube_green_buf.append(state_cube[7:14].astype(np.float32, copy=False))
+        self._pos_cube_blue_buf.append(state_cube[14:21].astype(np.float32, copy=False))
         self.append(
             state_joints,
             state_ee,

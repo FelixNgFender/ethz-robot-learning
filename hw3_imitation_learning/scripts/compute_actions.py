@@ -4,8 +4,8 @@ Actions are defined as the relative change (delta) between consecutive states:
     a_t = s_{t+1} - s_{t}
 The last timestep of every episode is dropped (no future state available).
 
-For the gripper, actions are the control commands recorded during teleop since we need to 
-push the gripper even more close to apply a force to the cube which can only be recorded from the 
+For the gripper, actions are the control commands recorded during teleop since we need to
+push the gripper even more close to apply a force to the cube which can only be recorded from the
 control input not the state.
 
 Three action spaces are supported (chosen via --action-space):

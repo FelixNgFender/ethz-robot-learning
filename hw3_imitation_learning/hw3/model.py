@@ -19,7 +19,9 @@ class BasePolicy(nn.Module, metaclass=abc.ABCMeta):
         self.chunk_size = chunk_size
 
     @abc.abstractmethod
-    def compute_loss(self, state: torch.Tensor, action_chunk: torch.Tensor) -> torch.Tensor:
+    def compute_loss(
+        self, state: torch.Tensor, action_chunk: torch.Tensor
+    ) -> torch.Tensor:
         """Compute training loss for a batch."""
         raise NotImplementedError
 
@@ -41,7 +43,9 @@ class ObstaclePolicy(BasePolicy):
         """Return predicted action chunk of shape (B, chunk_size, action_dim)."""
         raise NotImplementedError
 
-    def compute_loss(self, state: torch.Tensor, action_chunk: torch.Tensor) -> torch.Tensor:
+    def compute_loss(
+        self, state: torch.Tensor, action_chunk: torch.Tensor
+    ) -> torch.Tensor:
         raise NotImplementedError
 
     def sample_actions(self, state: torch.Tensor) -> torch.Tensor:
@@ -52,7 +56,9 @@ class ObstaclePolicy(BasePolicy):
 class MultiTaskPolicy(BasePolicy):
     """Goal-conditioned policy for the multicube scene."""
 
-    def compute_loss(self, state: torch.Tensor, action_chunk: torch.Tensor) -> torch.Tensor:
+    def compute_loss(
+        self, state: torch.Tensor, action_chunk: torch.Tensor
+    ) -> torch.Tensor:
         raise NotImplementedError
 
     def sample_actions(self, state: torch.Tensor) -> torch.Tensor:

@@ -160,20 +160,58 @@ def build_goal_schedule(goal_cube: str, num_episodes: int) -> list[str]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate a trained policy in simulation.")
-    parser.add_argument("--checkpoint", type=Path, required=True, help="Path to the model checkpoint (.pt).")
-    parser.add_argument("--multicube", action="store_true", help="Evaluate in multicube scene.")
-    parser.add_argument("--num-episodes", type=int, default=10, help="Number of evaluation episodes (default: 10).")
-    parser.add_argument("--max-steps", type=int, default=800, help="Maximum steps per episode (default: 800).")
-    parser.add_argument("--headless", action="store_true", help="Run without rendering.")
-    parser.add_argument("--seed", type=int, default=None, help="Random seed for reproducible cube spawns.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate a trained policy in simulation."
+    )
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        required=True,
+        help="Path to the model checkpoint (.pt).",
+    )
+    parser.add_argument(
+        "--multicube", action="store_true", help="Evaluate in multicube scene."
+    )
+    parser.add_argument(
+        "--num-episodes",
+        type=int,
+        default=10,
+        help="Number of evaluation episodes (default: 10).",
+    )
+    parser.add_argument(
+        "--max-steps",
+        type=int,
+        default=800,
+        help="Maximum steps per episode (default: 800).",
+    )
+    parser.add_argument(
+        "--headless", action="store_true", help="Run without rendering."
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducible cube spawns.",
+    )
 
     # single-cube args
-    parser.add_argument("--adversarial-obstacle", action="store_true", help="Use adversarial three-zone obstacle placement.")
+    parser.add_argument(
+        "--adversarial-obstacle",
+        action="store_true",
+        help="Use adversarial three-zone obstacle placement.",
+    )
 
     # multicube args
-    parser.add_argument("--goal-cube", type=str, default="all", choices=["red", "green", "blue", "all"], help="Goal colour for multicube ('all' cycles evenly).")
-    parser.add_argument("--no-shuffle", action="store_true", help="Disable multicube slot shuffling.")
+    parser.add_argument(
+        "--goal-cube",
+        type=str,
+        default="all",
+        choices=["red", "green", "blue", "all"],
+        help="Goal colour for multicube ('all' cycles evenly).",
+    )
+    parser.add_argument(
+        "--no-shuffle", action="store_true", help="Disable multicube slot shuffling."
+    )
 
     return parser.parse_args()
 
@@ -271,7 +309,9 @@ def main() -> None:
         cv2.destroyAllWindows()
 
     denom = max(episodes_run, 1)
-    print(f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
+    print(
+        f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)"
+    )
 
     if args.multicube and per_color is not None:
         print(f"{'═' * 50}")

@@ -28,7 +28,7 @@ from hw3.model import BasePolicy, build_policy
 from torch.utils.data import DataLoader, random_split
 
 # TODO: Choose your own hyperparameters!
-EPOCHS = ... 
+EPOCHS = ...
 BATCH_SIZE = ...
 LR = ...
 VAL_SPLIT = 0.1
@@ -150,9 +150,7 @@ def main() -> None:
     train_loader = DataLoader(
         train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
     )
-    val_loader = DataLoader(
-        val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
-    )
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     # ── model ─────────────────────────────────────────────────────────
     model = build_policy(

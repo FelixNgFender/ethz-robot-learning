@@ -83,7 +83,9 @@ def multicube_layout_has_overlap(cube_xy: np.ndarray, bin_xy: np.ndarray) -> boo
                 cube_xy[i], CUBE_HALF_EXTENT_XY, cube_xy[j], CUBE_HALF_EXTENT_XY
             ):
                 return True
-        if xy_boxes_overlap(cube_xy[i], CUBE_HALF_EXTENT_XY, bin_xy, BIN_HALF_EXTENT_XY):
+        if xy_boxes_overlap(
+            cube_xy[i], CUBE_HALF_EXTENT_XY, bin_xy, BIN_HALF_EXTENT_XY
+        ):
             return True
     return False
 
@@ -331,7 +333,9 @@ class SO100SimEnv(BaseSO100SimEnv):
             self.model, mujoco.mjtObj.mjOBJ_BODY, OBSTACLE_BODY_NAME
         )
         if self.obstacle_body_id != -1:
-            self._obstacle_default_pos = self.model.body_pos[self.obstacle_body_id].copy()
+            self._obstacle_default_pos = self.model.body_pos[
+                self.obstacle_body_id
+            ].copy()
         else:
             self._obstacle_default_pos = None
 

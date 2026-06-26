@@ -141,7 +141,9 @@ def load_and_merge_zarrs(
 
     for zp in zarr_paths:
         states, actions, ep_ends = load_zarr(
-            zp, state_keys=state_keys, action_keys=action_keys,
+            zp,
+            state_keys=state_keys,
+            action_keys=action_keys,
         )
         all_states.append(states)
         all_actions.append(actions)
