@@ -120,4 +120,3 @@ if __name__ == "__main__":
     final_model_path = Path(log_dir) / f"model_{final_update_step}"
     model.save(str(final_model_path))
     print(f"Saved models to {log_dir}")
-

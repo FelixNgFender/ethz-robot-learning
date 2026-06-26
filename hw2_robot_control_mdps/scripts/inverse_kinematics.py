@@ -37,4 +37,3 @@ if __name__ == "__main__":
                     f"Tracking error: {np.linalg.norm(data.site(site_name).xpos - keypoints[keypoint_id]):.4f}"
                 )
             time.sleep(0.5)
-
