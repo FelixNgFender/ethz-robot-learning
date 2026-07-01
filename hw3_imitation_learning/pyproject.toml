@@ -8,12 +8,12 @@ version = "0.1.0"
 description = "HW3 – Imitation learning with the SO-100 robot arm"
 requires-python = ">=3.10"
 dependencies = [
-    "torch",
-    "torchvision",
-    "zarr",
-    "opencv-python",
-    "dm-control",
-    "pyquaternion",
+  "torch",
+  "torchvision",
+  "zarr",
+  "opencv-python",
+  "dm-control",
+  "pyquaternion",
 ]
 
 [tool.setuptools.packages.find]

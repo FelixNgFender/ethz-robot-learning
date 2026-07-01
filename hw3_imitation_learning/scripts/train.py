@@ -28,9 +28,9 @@ from hw3.model import BasePolicy, build_policy
 from torch.utils.data import DataLoader, random_split
 
 # TODO: Choose your own hyperparameters!
-EPOCHS = ...
-BATCH_SIZE = ...
-LR = ...
+EPOCHS = 1
+BATCH_SIZE = 64
+LR = 3e-4
 VAL_SPLIT = 0.1
 
 
@@ -48,6 +48,9 @@ def train_one_epoch(
         states, action_chunks = batch
         # TODO: Implement the training step for one batch here.
         # This mostly: Get states and action_chunks onto the correct device, compute the loss, and step the optimizer.
+        states, action_chunks = states.to(device), action_chunks.to(device)
+        print(f"{states.shape=}, {action_chunks=}")
+        raise
 
     return total_loss / max(n_batches, 1)
 
@@ -74,6 +77,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Train action-chunking policy.")
     parser.add_argument(
         "--zarr", type=Path, required=True, help="Path to processed .zarr store."
+    )
+    parser.add_argument(
+        "--extra-zarr",
+        nargs="+",
+        default=None,
+        help="Paths to extra processed .zarr stores.",
     )
     parser.add_argument(
         "--policy",
@@ -107,7 +116,12 @@ def main() -> None:
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = (
+        torch.accelerator.current_accelerator()
+        if torch.accelerator.is_available()
+        else torch.device("cpu")
+    )
+    assert device is not None
     print(f"Device: {device}")
 
     # ── load data ─────────────────────────────────────────────────────
